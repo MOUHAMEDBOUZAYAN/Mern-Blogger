@@ -76,7 +76,7 @@ const CommentSection = ({ comments, onAddComment, onDeleteComment, currentUser }
                   </button>
                 )}
               </div>
-              <p className="text-gray-700 pl-11">{comment.content}</p>
+              <p className="text-gray-700 pl-11">{comment.content.content}</p>
             </div>
           ))
         )}
