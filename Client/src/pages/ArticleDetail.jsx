@@ -1,5 +1,4 @@
-// ArticleDetail.jsx
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useArticles } from '../hooks/useArticles';
 import { useComments } from '../hooks/useComments';
@@ -109,7 +108,7 @@ const ArticleDetail = () => {
         <Navbar />
         <div className="flex justify-center items-center min-h-[80vh]">
           <div className="text-center">
-            <FaBookOpen className="mx-auto text-4xl text-white animate-pulse" />
+            <div className="mx-auto text-4xl text-white animate-pulse">📖</div>
             <p className="mt-4 text-white">Loading article...</p>
           </div>
         </div>

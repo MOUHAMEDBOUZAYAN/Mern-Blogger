@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { LogOut, UserPlus, LogIn, Menu, X, PenSquare, Home, BookOpen, Search, User } from 'lucide-react';
+import { LogOut, UserPlus, LogIn, Menu, X, PenSquare, Home, BookOpen, Search, User, Info } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -30,7 +30,6 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-emerald-600 to-emerald-800 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
-        {/* Main Navigation */}
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
@@ -74,6 +73,13 @@ const Navbar = () => {
             >
               <BookOpen size={18} />
               <span>Articles</span>
+            </Link>
+            <Link
+              to="/about"
+              className="flex items-center space-x-1 text-white font-medium hover:bg-white/10 px-3 py-2 rounded-md transition"
+            >
+              <Info size={18} />
+              <span>About</span>
             </Link>
             
             {user ? (
@@ -173,6 +179,14 @@ const Navbar = () => {
             >
               <BookOpen size={18} />
               <span>Articles</span>
+            </Link>
+            <Link
+              to="/about"
+              className="block w-full text-left flex items-center space-x-3 text-white font-medium hover:bg-white/10 px-4 py-3 rounded-md transition"
+              onClick={() => setIsOpen(false)}
+            >
+              <Info size={18} />
+              <span>About</span>
             </Link>
 
             {user ? (

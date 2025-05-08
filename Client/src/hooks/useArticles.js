@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { 
   getArticles, 
   createArticle, 
@@ -19,95 +20,147 @@ export const useArticles = () => {
     fetchArticles();
   }, []);
 
-  const fetchArticles = async () => {
+  const fetchArticles = () => {
     setLoading(true);
-    try {
-      const data = await getArticles().toPromise();
-      setArticles(Array.isArray(data) ? data : []);
-    } catch (err) {
-      setError(err.message);
-      setArticles([]);
-    } finally {
-      setLoading(false);
-    }
+    setError(null);
+    
+    const subscription = getArticles().subscribe({
+      next: (data) => {
+        setArticles(Array.isArray(data) ? data : []);
+        setLoading(false);
+      },
+      error: (err) => {
+        setError(err.message);
+        setArticles([]);
+        setLoading(false);
+        toast.error("Failed to load articles");
+      }
+    });
+    
+    return () => subscription.unsubscribe();
   };
 
-  const addArticle = async (article) => {
-    try {
-      const newArticle = await createArticle(article).toPromise();
-      setArticles(prev => [...prev, newArticle]);
-      return newArticle;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
+  const addArticle = (article) => {
+    return new Promise((resolve, reject) => {
+      createArticle(article).subscribe({
+        next: (newArticle) => {
+          setArticles(prev => [...prev, newArticle]);
+          toast.success("Article added successfully");
+          resolve(newArticle);
+        },
+        error: (err) => {
+          setError(err.message);
+          toast.error("Failed to add article");
+          reject(err);
+        }
+      });
+    });
   };
 
-  const editArticle = async (id, updatedArticle) => {
-    try {
-      const updated = await updateArticle(id, updatedArticle).toPromise();
-      setArticles(prev => prev.map(article => 
-        article.id === id ? updated : article
-      ));
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
+  const editArticle = (id, updatedArticle) => {
+    return new Promise((resolve, reject) => {
+      updateArticle(id, updatedArticle).subscribe({
+        next: (updated) => {
+          setArticles(prev => prev.map(article => 
+            article.id === id ? updated : article
+          ));
+          toast.success("Article updated successfully");
+          resolve(updated);
+        },
+        error: (err) => {
+          setError(err.message);
+          toast.error("Failed to update article");
+          reject(err);
+        }
+      });
+    });
   };
 
-  const removeArticle = async (id) => {
-    try {
-      await deleteArticle(id).toPromise();
-      setArticles(prev => prev.filter(article => article.id !== id));
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
+  const removeArticle = (id) => {
+    return new Promise((resolve, reject) => {
+      deleteArticle(id).subscribe({
+        next: () => {
+          setArticles(prev => prev.filter(article => article.id !== id));
+          toast.success("Article deleted successfully");
+          resolve();
+        },
+        error: (err) => {
+          setError(err.message);
+          toast.error("Failed to delete article");
+          reject(err);
+        }
+      });
+    });
   };
 
-  const search = async (query) => {
-    try {
-      const results = await searchArticles(query).toPromise();
-      setArticles(Array.isArray(results) ? results : []);
-    } catch (err) {
-      setError(err.message);
-    }
+  const search = (query) => {
+    setLoading(true);
+    setError(null);
+    
+    searchArticles(query).subscribe({
+      next: (results) => {
+        setArticles(Array.isArray(results) ? results : []);
+        setLoading(false);
+      },
+      error: (err) => {
+        setError(err.message);
+        setLoading(false);
+        toast.error("Search failed");
+      }
+    });
   };
 
-  const filterByCategory = async (categoryId) => {
-    try {
-      const filtered = await filterArticlesByCategory(categoryId).toPromise();
-      setArticles(Array.isArray(filtered) ? filtered : []);
-    } catch (err) {
-      setError(err.message);
-    }
+  const filterByCategory = (categoryId) => {
+    setLoading(true);
+    setError(null);
+    
+    filterArticlesByCategory(categoryId).subscribe({
+      next: (filtered) => {
+        setArticles(Array.isArray(filtered) ? filtered : []);
+        setLoading(false);
+      },
+      error: (err) => {
+        setError(err.message);
+        setLoading(false);
+        toast.error("Failed to filter articles");
+      }
+    });
   };
 
-  const like = async (id) => {
-    try {
-      const updated = await likeArticle(id).toPromise();
-      setArticles(prev => prev.map(article => 
-        article.id === id ? updated : article
-      ));
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
+  const like = (id) => {
+    return new Promise((resolve, reject) => {
+      likeArticle(id).subscribe({
+        next: (updated) => {
+          setArticles(prev => prev.map(article => 
+            article.id === id ? updated : article
+          ));
+          resolve(updated);
+        },
+        error: (err) => {
+          setError(err.message);
+          toast.error("Failed to like article");
+          reject(err);
+        }
+      });
+    });
   };
 
-  const bookmark = async (id) => {
-    try {
-      const updated = await bookmarkArticle(id).toPromise();
-      setArticles(prev => prev.map(article => 
-        article.id === id ? updated : article
-      ));
-      return updated;
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    }
+  const bookmark = (id) => {
+    return new Promise((resolve, reject) => {
+      bookmarkArticle(id).subscribe({
+        next: (updated) => {
+          setArticles(prev => prev.map(article => 
+            article.id === id ? updated : article
+          ));
+          resolve(updated);
+        },
+        error: (err) => {
+          setError(err.message);
+          toast.error("Failed to bookmark article");
+          reject(err);
+        }
+      });
+    });
   };
 
   return { 

@@ -6,9 +6,9 @@ import CreateArticle from './pages/CreateArticle';
 import EditArticle from './pages/EditArticle';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import About from './pages/About';
 import PrivateRoute from './components/PrivateRoute';
 import Footer from './components/Footer';
- // Make sure to import Navbar
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
             <Route path="articles/:id" element={<ArticleDetail />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="about" element={<About />} />
             
             <Route path="articles/create" element={
               <PrivateRoute>
