@@ -1,14 +1,14 @@
 {
   "users": [
     {
-      "id": 1746029865851,
+      "id": "1746029865851",
       "name": "anass",
       "email": "anass@gmail.com",
       "password": "123123",
       "createdAt": "2025-04-30T16:17:45.851Z"
     },
     {
-      "id": 1746029893600,
+      "id": "1746029893600",
       "name": "M.r Mohamed Bouzayan",
       "email": "mohammedbouzi177@gmail.com",
       "password": "123123",
@@ -60,6 +60,13 @@
       "categoryId": "2",
       "image": "",
       "id": "3af0"
+    },
+    {
+      "title": "Mouhamed",
+      "content": "Hwa li akem l3alam  dyal mghrib ",
+      "categoryId": "2",
+      "image": "",
+      "id": "8ab9"
     }
   ],
   "comments": [
@@ -72,6 +79,36 @@
       "userId": 1746029893600,
       "articleId": "ed4d",
       "createdAt": "2025-04-30T16:22:06.563Z"
+    },
+    {
+      "id": "d425",
+      "content": {
+        "content": "cccc"
+      },
+      "author": "MOUHAMED BOUZAYAN",
+      "userId": "1746397770814",
+      "articleId": "2655",
+      "createdAt": "2025-06-08T11:34:32.817Z"
+    },
+    {
+      "id": "542a",
+      "content": {
+        "content": "naaadi "
+      },
+      "author": "MOUHAMED BOUZAYAN",
+      "userId": "1746397770814",
+      "articleId": "8ab9",
+      "createdAt": "2025-06-08T11:37:18.773Z"
+    },
+    {
+      "id": "ab51",
+      "content": {
+        "content": "herbaaaan "
+      },
+      "author": "MOUHAMED BOUZAYAN",
+      "userId": "1746397770814",
+      "articleId": "8ab9",
+      "createdAt": "2025-06-08T11:37:23.801Z"
     }
   ],
   "categories": [
