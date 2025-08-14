@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../contexts/ThemeContext';
 import { 
   LogOut, UserPlus, LogIn, Menu, X, PenSquare, Home, 
   BookOpen, Search, User, Info, Moon, Sun, Bell, Settings 
